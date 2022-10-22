@@ -1,2 +1,2 @@
-# cse210-06
+# Game of Life
 Final Project for CSE210
