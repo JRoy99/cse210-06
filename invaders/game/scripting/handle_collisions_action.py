@@ -63,7 +63,7 @@ class HandleCollisionsAction(Action):
                     elif difference.get_y() <= 10:
                         if difference.get_x() <= 55 and difference.get_x() >= -15:
                             player.set_score(player.get_score() + 1)
-                            if player.get_score() % 50 == 0:
+                            if player.get_score() % 100 == 0:
                                 player.set_boss_flag(True)
                             cast.remove_actor("bullets", bullet)                    
 

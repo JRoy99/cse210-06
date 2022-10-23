@@ -40,8 +40,8 @@ class SpawnInvaders(Action):
         type = random.choices([1, 2, 3], weights=(self._chances), k=1)
 
         if type[0] == 1 and self._chances[0] > 40:
-          self._chances[0] -= .25
-          self._chances[1] += .25
+          self._chances[0] -= .5
+          self._chances[1] += .5
         if type[0] == 2 and self._chances[1] > 25:
           self._chances[1] -= .5
           self._chances[2] += .5
