@@ -74,11 +74,14 @@ class Invader(Actor):
         #Diagonal Type
         if type == 2:
             self.set_color(constants.YELLOW)
-            total_velocity = int(self.get_lives()/(2)+1)
-            if total_velocity > 8:
-                total_velocity = 8
+            total_velocity = int(self.get_lives()/(1.5)+3)
+            if total_velocity > 15:
+                total_velocity = 15
 
-            self.set_velocity(Point(random.choice([-1, 1]), total_velocity))
+            x_vel = random.choice([-9, 9])/12 * total_velocity 
+            y_vel = total_velocity - abs(x_vel)
+
+            self.set_velocity(Point(x_vel, y_vel))
 
 
         #Targeted Type

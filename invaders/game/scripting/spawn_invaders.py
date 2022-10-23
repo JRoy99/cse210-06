@@ -7,6 +7,9 @@ from game.scripting.action import Action
 
 class SpawnInvaders(Action):
   
+  def __init__(self):
+    self._chances = [100, 0, 0]
+
   def execute(self, cast, script):
 
     invaders = cast.get_actors("invaders")
@@ -34,6 +37,14 @@ class SpawnInvaders(Action):
         cast.add_actor("invaders", invader)
 
       else:
-        type = random.randint(1,3)
-        invader = Invader(strength_range, False, position, player.get_position(), type)
+        type = random.choices([1, 2, 3], weights=(self._chances), k=1)
+
+        if type[0] == 1 and self._chances[0] > 40:
+          self._chances[0] -= .25
+          self._chances[1] += .25
+        if type[0] == 2 and self._chances[1] > 25:
+          self._chances[1] -= .5
+          self._chances[2] += .5
+
+        invader = Invader(strength_range, False, position, player.get_position(), type[0])
         cast.add_actor("invaders", invader)
