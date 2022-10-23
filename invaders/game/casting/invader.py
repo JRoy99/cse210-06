@@ -25,6 +25,9 @@ class Invader(Actor):
         self.set_color(constants.RED)
         self.set_velocity(Point(0, int(strength/2+1)))
         self.set_font_size(constants.FONT_SIZE)
+        
+        if self.get_velocity() > 10:
+            self.set_velocity(10)
 
         if isBoss:
             self._boss_gen()
@@ -53,3 +56,6 @@ class Invader(Actor):
         self.set_lives(int((self.get_lives() + 2) ** 1.5))
         self.set_color(constants.PURPLE)
         self.set_font_size(int(constants.FONT_SIZE * 2))
+
+        if self.get_velocity() > 15:
+            self.set_velocity(15)
