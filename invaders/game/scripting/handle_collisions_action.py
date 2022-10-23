@@ -35,8 +35,9 @@ class HandleCollisionsAction(Action):
         for object in objects:
             try:
                 #if object is sufficiently close to robot, delete object and change score
-                if (abs(object.get_position().get_x() - robot.get_position().get_x()) <= 20 and 
-                    abs(object.get_position().get_y() - robot.get_position().get_y()) <= 20):
+                difference = object.get_position().subtract(robot.get_position())
+                if (difference.get_x() <= 60 and difference.get_x() >= -15 and 
+                    abs(difference.get_y()) <= 20):
                     robot.set_lives(robot.get_lives() - 1)
                     cast.remove_actor("objects", object)
             except:
@@ -47,16 +48,15 @@ class HandleCollisionsAction(Action):
             for object in objects:
                 try:
                     #if bullet is sufficiently close to object, delete bullet, change score, decrement object lives
-                    if (abs(bullet.get_position().get_x() - object.get_position().get_x()) <= 50 and 
-                            abs(bullet.get_position().get_y() - object.get_position().get_y() <= 10)):
-                        robot.set_score(robot.get_score() + object.get_score())
-                        cast.remove_actor("bullets", bullet)
+                    difference = bullet.get_position().subtract(object.get_position())  
+                    if difference.get_y() <= 10:
+                        if difference.get_x() <= 60 and difference.get_x() >= -15:
+                            robot.set_score(robot.get_score() + object.get_score())
+                            cast.remove_actor("bullets", bullet)
 
-                        object.set_lives(object.get_lives() - 1)
-                        object.set_text(f"-{object.get_lives()}-")
-                        if not(object.is_alive()):
-                            cast.remove_actor("objects", object)
-
+                            object.set_lives(object.get_lives() - 1)
+                            object.set_text(f"-{object.get_lives()}-")
+                            if not(object.is_alive()):
+                                cast.remove_actor("objects", object)   
                 except:
                     pass
-    
