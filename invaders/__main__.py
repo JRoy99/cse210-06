@@ -42,17 +42,17 @@ def main():
     cast.add_actor("scores", Score("SCORE: ",Point(int(constants.MAX_X * .05), 40), constants.WHITE))  
     cast.add_actor("scores", Score("LIVES: ",Point(int(constants.MAX_X * .8), 0), constants.WHITE))
 
-    # create the robot
+    # create the player
     x = int(constants.MAX_X / 2)
     y = int(constants.MAX_Y - constants.CELL_SIZE)
     position = Point(x, y)
 
-    robot = Player()
-    robot.set_text("#")
-    robot.set_font_size(constants.FONT_SIZE)
-    robot.set_color(constants.WHITE)
-    robot.set_position(position)
-    cast.add_actor("robots", robot)
+    player = Player()
+    player.set_text("#")
+    player.set_font_size(constants.FONT_SIZE)
+    player.set_color(constants.WHITE)
+    player.set_position(position)
+    cast.add_actor("players", player)
 
     # create the script
     script = Script()

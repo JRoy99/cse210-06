@@ -29,10 +29,10 @@ class ControlActorsAction(Action):
             script (Script): The script of Actions in the game.
         """
 
-        robot = cast.get_first_actor("robots")
+        player = cast.get_first_actor("players")
         velocity = self._keyboard_service.get_direction()
         
         if (velocity.get_y() == 0):
-            robot.set_velocity(velocity)
+            player.set_velocity(velocity)
         else:
-            robot.shoot_bullet(cast)
+            player.shoot_bullet(cast)

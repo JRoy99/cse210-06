@@ -27,36 +27,36 @@ class HandleCollisionsAction(Action):
             script (Script): The script of Actions in the game.
         """
 
-        robot = cast.get_first_actor("robots")
+        player = cast.get_first_actor("players")
         bullets = cast.get_actors("bullets")
-        objects = cast.get_actors("objects")
+        invaders = cast.get_actors("invaders")
 
-        #loop through objects
-        for object in objects:
+        #loop through invaders
+        for invader in invaders:
             try:
-                #if object is sufficiently close to robot, delete object and change score
-                difference = object.get_position().subtract(robot.get_position())
+                #if invader is sufficiently close to player, delete invader and change score
+                difference = invader.get_position().subtract(player.get_position())
                 if (difference.get_x() <= 60 and difference.get_x() >= -15 and 
                     abs(difference.get_y()) <= 20):
-                    robot.set_lives(robot.get_lives() - 1)
-                    cast.remove_actor("objects", object)
+                    player.set_lives(player.get_lives() - 1)
+                    cast.remove_actor("invaders", invader)
             except:
                 pass
 
         #detect bullet collision
         for bullet in bullets:
-            for object in objects:
+            for invader in invaders:
                 try:
-                    #if bullet is sufficiently close to object, delete bullet, change score, decrement object lives
-                    difference = bullet.get_position().subtract(object.get_position())  
+                    #if bullet is sufficiently close to invader, delete bullet, change score, decrement invader lives
+                    difference = bullet.get_position().subtract(invader.get_position())  
                     if difference.get_y() <= 10:
                         if difference.get_x() <= 60 and difference.get_x() >= -15:
-                            robot.set_score(robot.get_score() + object.get_score())
+                            player.set_score(player.get_score() + invader.get_score())
                             cast.remove_actor("bullets", bullet)
 
-                            object.set_lives(object.get_lives() - 1)
-                            object.set_text(f"-{object.get_lives()}-")
-                            if not(object.is_alive()):
-                                cast.remove_actor("objects", object)   
+                            invader.set_lives(invader.get_lives() - 1)
+                            invader.set_text(f"-{invader.get_lives()}-")
+                            if not(invader.is_alive()):
+                                cast.remove_actor("invaders", invader)   
                 except:
                     pass

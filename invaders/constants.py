@@ -11,4 +11,4 @@ CAPTION = "Invaders"
 
 WHITE = Color(255, 255, 255)
 RED = Color(255,0,0)
-MAX_OBJECTS = 10 # Maximum objects on screen
+MAX_INVADERS = 10 # Maximum INVADERs on screen

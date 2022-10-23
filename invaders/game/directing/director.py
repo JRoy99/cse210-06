@@ -28,10 +28,10 @@ class Director:
         Args:
             cast (Cast): The cast of actors.
         """
-        robot = cast.get_first_actor("robots")
+        player = cast.get_first_actor("players")
 
         self._video_service.open_window()
-        while self._video_service.is_window_open() and robot.is_alive():
+        while self._video_service.is_window_open() and player.is_alive():
             self._execute_actions("input", cast, script)
             self._execute_actions("update", cast, script)
             self._execute_actions("output", cast, script)

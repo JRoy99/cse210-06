@@ -14,11 +14,11 @@ class MoveActorsAction(Action):
             cast (Cast): The cast of Actors in the game.
             script (Script): The script of Actions in the game.
         """
-        robot = cast.get_first_actor("robots")
+        player = cast.get_first_actor("players")
         bullets = cast.get_actors("bullets")
-        objects = cast.get_actors("objects")
+        invaders = cast.get_actors("invaders")
 
-        robot.move_next(constants.MAX_X, constants.MAX_Y)
+        player.move_next(constants.MAX_X, constants.MAX_Y)
 
         for i in bullets:
             try:
@@ -30,11 +30,11 @@ class MoveActorsAction(Action):
             except:
                 pass
 
-        for i in objects:
+        for i in invaders:
             try:
-                #delete objects as they exit the screen
+                #delete invaders as they exit the screen
                 if i.get_position().get_y() <= 5:
-                    cast.remove_actor("objects", i)
+                    cast.remove_actor("invaders", i)
                 else:
                     i.move_next(constants.MAX_X, constants.MAX_Y)   
             except:
