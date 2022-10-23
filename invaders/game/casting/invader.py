@@ -100,7 +100,6 @@ class Invader(Actor):
             y_vel = total_velocity * (y_dist / h_dist)
  
             self.set_velocity(Point(x_vel, y_vel))
-            print(f"{x_vel}/{x_dist}/{self.get_position().get_x()} -- {player_position.get_x()}" )
 
     def get_type(self):
         return self._type
