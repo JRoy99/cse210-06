@@ -1,5 +1,5 @@
 # Invaders
-
+Numbers are falling from the sky and the trouble is adding up! Blast them away with your cannon and aim for a high score, but don't let them touch you! Use the arrow keys to move left and right and spacebar to fire. Every 50 points, a special enemy will appear. They can't hurt you, but they have special goodies like an extra life or a cannon upgrade. Gun 'em down!
 
 ## Getting Started
 ---
