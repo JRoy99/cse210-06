@@ -8,7 +8,6 @@ class Player(Actor):
     def __init__(self):
         super().__init__()
         self._lives = 3
-        pass
 
     def shoot_bullet(self, cast):
         bullet = Bullet(self.get_position())
@@ -24,7 +23,7 @@ class Player(Actor):
             return False
         
     def set_lives(self, lives_rem):
-        self._lives= lives_rem
+        self._lives = lives_rem
 
     def get_lives(self):
         return self._lives

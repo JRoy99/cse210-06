@@ -1,12 +1,22 @@
+import imp
 import os
 import random
 
 import constants
 
 from game.casting.actor import Actor
-from game.casting.invader import Object
 from game.casting.player import Player
 from game.casting.cast import Cast
+from game.casting.score import Score
+
+from game.scripting.script import Script
+from game.scripting.control_actors_action import ControlActorsAction
+from game.scripting.move_actors_action import MoveActorsAction
+from game.scripting.handle_collisions_action import HandleCollisionsAction
+from game.scripting.spawn_invaders import SpawnInvaders
+from game.scripting.handle_game_over import HandleGameOver
+from game.scripting.banner_update import BannerUpdate
+from game.scripting.draw_actors_action import DrawActorsAction
 
 from game.directing.director import Director
 
@@ -17,47 +27,21 @@ from game.shared.color import Color
 from game.shared.point import Point
 
 
-def spawn_objects(cast, current_objects):
-# create the objects
-
-    for n in range(current_objects, constants.MAX_OBJECTS):
-        x = random.randint(1, constants.COLS - 1)
-        y = random.randint(1, int((constants.ROWS - 1)/5))
-        position = Point(x, y)
-        position = position.scale(constants.CELL_SIZE)
-
-        color = constants.RED
-        
-        object = Object()
-        object.set_text("o")
-
-        #Set score values
-        if object.get_text() == "*":            
-            object.set_score(random.randint(1, 5))
-        else:
-            object.set_score(random.randint(-5, -1))
-
-        object.set_font_size(constants.FONT_SIZE)
-        object.set_color(color)
-        object.set_position(position)
-        object.set_velocity(Point(0, abs(object.get_score())))
-
-
-        cast.add_actor("objects", object)
 
 def main():
     
+    # create shared services
+    keyboard_service = KeyboardService(constants.CELL_SIZE)
+    video_service = VideoService(constants.CAPTION, constants.MAX_X, constants.MAX_Y, 
+        constants.CELL_SIZE, constants.FRAME_RATE)
+
     # create the cast
     cast = Cast()
-    
-    # create the banner
-    banner = Actor()
-    banner.set_text("")
-    banner.set_font_size(constants.FONT_SIZE)
-    banner.set_color(constants.WHITE)
-    banner.set_position(Point(constants.CELL_SIZE, 0))
-    cast.add_actor("banners", banner)
-    
+
+    cast.add_actor("scores", Score("HIGH SCORE: ",Point(int(constants.MAX_X * .05), 0), constants.WHITE))
+    cast.add_actor("scores", Score("SCORE: ",Point(int(constants.MAX_X * .05), 40), constants.WHITE))  
+    cast.add_actor("scores", Score("LIVES: ",Point(int(constants.MAX_X * .8), 0), constants.WHITE))
+
     # create the robot
     x = int(constants.MAX_X / 2)
     y = int(constants.MAX_Y - constants.CELL_SIZE)
@@ -69,15 +53,22 @@ def main():
     robot.set_color(constants.WHITE)
     robot.set_position(position)
     cast.add_actor("robots", robot)
-    
-    spawn_objects(cast, 0, 0)
+
+    # create the script
+    script = Script()
+    script.add_action("input", ControlActorsAction(keyboard_service))
+    script.add_action("update", MoveActorsAction())
+    script.add_action("update", HandleCollisionsAction())
+    script.add_action("update", SpawnInvaders())
+    script.add_action("update", HandleGameOver())
+    script.add_action("update", BannerUpdate())
+    script.add_action("output", DrawActorsAction(video_service))
     
     # start the game
-    keyboard_service = KeyboardService(constants.CELL_SIZE)
-    video_service = VideoService(constants.CAPTION, constants.MAX_X, constants.MAX_Y, 
-        constants.CELL_SIZE, constants.FRAME_RATE)
+
     director = Director(keyboard_service, video_service)
-    director.start_game(cast)
+
+    director.start_game(cast, script)
 
 
 if __name__ == "__main__":

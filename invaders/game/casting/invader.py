@@ -13,6 +13,19 @@ class Object(Actor):
             _score: The number of points an object has/is worth
     """
     
-    def __init__(self):
+    def __init__(self, lives):
         """Constructs a new Object"""
-        pass
+        super().__init__()
+        self._lives = lives
+
+    def is_alive(self):
+        if self._lives > 0:
+            return True
+        else:
+            return False
+        
+    def set_lives(self, lives_rem):
+        self._lives = lives_rem
+
+    def get_lives(self):
+        return self._lives
