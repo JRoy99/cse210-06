@@ -35,4 +35,4 @@ class ControlActorsAction(Action):
         if (velocity.get_y() == 0):
             player.set_velocity(velocity)
         else:
-            player.shoot_bullet(cast)
+            player.shoot_bullets(cast)

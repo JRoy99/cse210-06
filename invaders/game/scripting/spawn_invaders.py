@@ -14,26 +14,22 @@ class SpawnInvaders(Action):
 
     # create the invaders
     for n in range(len(invaders), constants.MAX_INVADERS):
-      x = random.randint(1, constants.COLS - 1)
+      x = random.randint(1, int(constants.COLS - 1))
       y = random.randint(1, int((constants.ROWS - 1)/5))
       position = Point(x, y)
       position = position.scale(constants.CELL_SIZE)
-
-      color = constants.RED
 
       strength = random.randint(int(player.get_score() ** 0.3), int(player.get_score() ** .4))
 
       if strength < 1:
         strength = 1
 
-      invader = Invader(strength)
-      invader.set_text(f"-{invader.get_lives()}-")
-      invader.set_score(1)
+      if player.get_boss_flag():
+        invader = Invader(strength, True, position)
+        player.set_boss_flag(False)
+        cast.add_actor("bosses", invader)
+        cast.add_actor("invaders", invader)
 
-
-      invader.set_font_size(constants.FONT_SIZE)
-      invader.set_color(color)
-      invader.set_position(position)
-      invader.set_velocity(Point(0, strength))
-
-      cast.add_actor("invaders", invader)
+      else:
+        invader = Invader(strength, False, position)
+        cast.add_actor("invaders", invader)

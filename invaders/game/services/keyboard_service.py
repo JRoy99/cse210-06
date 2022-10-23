@@ -35,7 +35,7 @@ class KeyboardService:
         if pyray.is_key_down(pyray.KEY_RIGHT):
             dx = 1
         
-        if pyray.is_key_pressed(pyray.KEY_UP):
+        if pyray.is_key_pressed(pyray.KEY_SPACE):
             dy = -1
 
         direction = Point(dx, dy)

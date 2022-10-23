@@ -30,16 +30,17 @@ class HandleCollisionsAction(Action):
         player = cast.get_first_actor("players")
         bullets = cast.get_actors("bullets")
         invaders = cast.get_actors("invaders")
+        bosses = cast.get_actors("bosses")
 
         #loop through invaders
         for invader in invaders:
             try:
                 #if invader is sufficiently close to player, delete invader and change score
-                difference = invader.get_position().subtract(player.get_position())
-                if (difference.get_x() <= 60 and difference.get_x() >= -15 and 
-                    abs(difference.get_y()) <= 20):
-                    player.set_lives(player.get_lives() - 1)
-                    cast.remove_actor("invaders", invader)
+                difference = player.get_position().subtract(invader.get_position())
+                if abs(difference.get_y()) <= 20:
+                    if (difference.get_x() <= 55 and difference.get_x() >= -20):
+                        player.set_lives(player.get_lives() - 1)
+                        cast.remove_actor("invaders", invader)
             except:
                 pass
 
@@ -49,14 +50,38 @@ class HandleCollisionsAction(Action):
                 try:
                     #if bullet is sufficiently close to invader, delete bullet, change score, decrement invader lives
                     difference = bullet.get_position().subtract(invader.get_position())  
-                    if difference.get_y() <= 10:
-                        if difference.get_x() <= 60 and difference.get_x() >= -15:
-                            player.set_score(player.get_score() + invader.get_score())
-                            cast.remove_actor("bullets", bullet)
+                    
+                    #evaluate boss collision
+                    if invader in bosses:
+                        if difference.get_y() <= 20:
+                            if difference.get_x() <= 110 and difference.get_x() >= -30:
+                                cast.remove_actor("bullets", bullet)
+                                invader.set_lives(invader.get_lives() - 1)
+                                invader.set_text(f"-{invader.get_lives()}-")
+                    
+                    #evaluate normal collision
+                    elif difference.get_y() <= 10:
+                        if difference.get_x() <= 55 and difference.get_x() >= -15:
+                            player.set_score(player.get_score() + 1)
+                            if player.get_score() % 50 == 0:
+                                player.set_boss_flag(True)
+                            cast.remove_actor("bullets", bullet)                    
 
                             invader.set_lives(invader.get_lives() - 1)
                             invader.set_text(f"-{invader.get_lives()}-")
-                            if not(invader.is_alive()):
-                                cast.remove_actor("invaders", invader)   
+
+                    #check enemy death
+                    if not(invader.is_alive()):
+                        cast.remove_actor("invaders", invader)  
+                        if invader in bosses:
+                            cast.remove_actor("bosses", invader)
+
+                            if player.get_lives() + player.get_guns() >= player.gun_req():
+                                player.set_guns(player.get_guns() + 1)
+                                player.set_gun_req(player.get_gun_req() + player.get_guns())
+                            else:
+                                player.set_lives(player.get_lives() + 1)
+
+                             
                 except:
                     pass

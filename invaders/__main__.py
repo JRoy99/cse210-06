@@ -1,10 +1,5 @@
-import imp
-import os
-import random
-
 import constants
 
-from game.casting.actor import Actor
 from game.casting.player import Player
 from game.casting.cast import Cast
 from game.casting.score import Score
@@ -23,7 +18,6 @@ from game.directing.director import Director
 from game.services.keyboard_service import KeyboardService
 from game.services.video_service import VideoService
 
-from game.shared.color import Color
 from game.shared.point import Point
 
 
