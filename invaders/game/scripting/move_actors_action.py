@@ -33,7 +33,7 @@ class MoveActorsAction(Action):
         for i in invaders:
             try:
                 #delete invaders as they exit the screen
-                if i.get_position().get_y() >= constants.MAX_Y - 10:
+                if i.get_position().get_y() >= constants.MAX_Y - 20:
                     cast.remove_actor("invaders", i)
                 else:
                     i.move_next(constants.MAX_X, constants.MAX_Y)   
