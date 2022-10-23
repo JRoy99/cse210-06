@@ -50,6 +50,6 @@ class Invader(Actor):
 
     def _boss_gen(self):
         self.set_velocity(Point(0, int(self.get_lives() + 1)))
-        self.set_lives(int((self.get_lives() + 3) ** 1.5))
+        self.set_lives(int((self.get_lives() + 2) ** 1.5))
         self.set_color(constants.PURPLE)
         self.set_font_size(int(constants.FONT_SIZE * 2))

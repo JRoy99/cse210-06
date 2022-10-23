@@ -34,7 +34,7 @@ class MoveActorsAction(Action):
         for invader in invaders:
             try:
                 #delete invaders as they exit the screen
-                if invader.get_position().get_y() >= constants.MAX_Y - 10:
+                if invader.get_position().get_y() >= constants.MAX_Y - 20:
                     cast.remove_actor("invaders", invader)
                     if invader in bosses:
                         cast.remove_actor("bosses", invader)

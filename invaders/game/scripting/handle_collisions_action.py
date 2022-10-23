@@ -54,7 +54,7 @@ class HandleCollisionsAction(Action):
                     #evaluate boss collision
                     if invader in bosses:
                         if difference.get_y() <= 20:
-                            if difference.get_x() <= 120 and difference.get_x() >= -30:
+                            if difference.get_x() <= 140 and difference.get_x() >= -30:
                                 cast.remove_actor("bullets", bullet)
                                 invader.set_lives(invader.get_lives() - 1)
                                 invader.set_text(f"-{invader.get_lives()}-")
@@ -75,10 +75,8 @@ class HandleCollisionsAction(Action):
                         cast.remove_actor("invaders", invader)  
                         if invader in bosses:
                             cast.remove_actor("bosses", invader)
-
-                            if player.get_lives() + player.get_guns() >= player.gun_req():
+                            if (int(player.get_score() / 100) + 1) > player.get_guns():
                                 player.set_guns(player.get_guns() + 1)
-                                player.set_gun_req(player.get_gun_req() + player.get_guns())
                             else:
                                 player.set_lives(player.get_lives() + 1)
 

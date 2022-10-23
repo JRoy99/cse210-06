@@ -14,7 +14,7 @@ class SpawnInvaders(Action):
 
     # create the invaders
     for n in range(len(invaders), constants.MAX_INVADERS):
-      x = random.randint(1, int(constants.COLS - 1))
+      x = random.randint(2, int(constants.COLS - 2))
       y = random.randint(1, int((constants.ROWS - 1)/8))
       position = Point(x, y)
       position = position.scale(constants.CELL_SIZE)

@@ -11,7 +11,6 @@ class Player(Actor):
         self._lives = 3
         self._boss_flag = False
         self._guns = 1
-        self._gun_req = 3
 
     def shoot_bullets(self, cast):
 
@@ -19,11 +18,11 @@ class Player(Actor):
         cast.add_actor("bullets", bullet)
 
         if self.get_guns() > 1:
-            for n in range(2, self.get_guns()):
+            for n in range(2, self.get_guns()+1):
                 if n % 2 == 0:
-                    bullet = Bullet("^", self.get_position().add(Point(3*n,-3+n)), constants.FONT_SIZE, constants.WHITE)
+                    bullet = Bullet("^", self.get_position().add(Point(4*n,-3+(2*n))), constants.FONT_SIZE, constants.WHITE)
                 else:
-                    bullet = Bullet("^", self.get_position().add(Point(-3*(n-1),-3+(n-1))), constants.FONT_SIZE, constants.WHITE)
+                    bullet = Bullet("^", self.get_position().add(Point(-4*(n-1),-3+(2*(n-1)))), constants.FONT_SIZE, constants.WHITE)
                 cast.add_actor("bullets", bullet)
 
     def is_alive(self):
@@ -49,9 +48,3 @@ class Player(Actor):
 
     def set_guns(self, guns):
         self._guns = guns
-
-    def get_gun_req(self):
-        return self._gun_req
-
-    def set_gun_req(self, gun_req):
-        self._gun_req = gun_req
