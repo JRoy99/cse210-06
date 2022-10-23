@@ -17,25 +17,28 @@ class MoveActorsAction(Action):
         player = cast.get_first_actor("players")
         bullets = cast.get_actors("bullets")
         invaders = cast.get_actors("invaders")
+        bosses = cast.get_actors("bosses")
 
         player.move_next(constants.MAX_X, constants.MAX_Y)
 
-        for i in bullets:
+        for bullet in bullets:
             try:
                 #delete bullets as they exit the screen
-                if i.get_position().get_y() <= 15:
-                    cast.remove_actor("bullets", i)
+                if bullet.get_position().get_y() <= 15:
+                    cast.remove_actor("bullets", bullet)
                 else:
-                    i.move_next(constants.MAX_X, constants.MAX_Y)   
+                    bullet.move_next(constants.MAX_X, constants.MAX_Y)   
             except:
                 pass
 
-        for i in invaders:
+        for invader in invaders:
             try:
                 #delete invaders as they exit the screen
-                if i.get_position().get_y() >= constants.MAX_Y - 20:
-                    cast.remove_actor("invaders", i)
+                if invader.get_position().get_y() >= constants.MAX_Y - 10:
+                    cast.remove_actor("invaders", invader)
+                    if invader in bosses:
+                        cast.remove_actor("bosses", invader)
                 else:
-                    i.move_next(constants.MAX_X, constants.MAX_Y)   
+                    invader.move_next(constants.MAX_X, constants.MAX_Y)   
             except:
                 pass
