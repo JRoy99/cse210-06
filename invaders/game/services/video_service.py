@@ -39,8 +39,8 @@ class VideoService:
             actor (Actor): The actor to draw.
         """ 
         text = actor.get_text()
-        x = actor.get_position().get_x()
-        y = actor.get_position().get_y()
+        x = int(actor.get_position().get_x())
+        y = int(actor.get_position().get_y())
         font_size = actor.get_font_size()
         color = actor.get_color().to_tuple()
         pyray.draw_text(text, x, y, font_size, color)

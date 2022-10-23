@@ -11,5 +11,7 @@ CAPTION = "Invaders"
 
 WHITE = Color(255, 255, 255)
 RED = Color(255,0,0)
-PURPLE = Color(186, 85, 211)
-MAX_INVADERS =  10 # Maximum invaders on screen
+ORANGE = Color(255,117,24)
+YELLOW = Color(255,192,0)
+PURPLE = Color(218, 112, 214)#Color(186, 85, 211)
+MAX_INVADERS =  20 # Maximum invaders on screen

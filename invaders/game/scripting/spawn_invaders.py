@@ -28,11 +28,12 @@ class SpawnInvaders(Action):
         strength_range[1] = 1
 
       if player.get_boss_flag():
-        invader = Invader(strength_range, True, position)
+        invader = Invader(strength_range, True, position, player.get_position(), type = 0, )
         player.set_boss_flag(False)
         cast.add_actor("bosses", invader)
         cast.add_actor("invaders", invader)
 
       else:
-        invader = Invader(strength_range, False, position)
+        type = random.randint(1,3)
+        invader = Invader(strength_range, False, position, player.get_position(), type)
         cast.add_actor("invaders", invader)

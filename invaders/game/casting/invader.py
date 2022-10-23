@@ -18,25 +18,21 @@ class Invader(Actor):
             _score: The number of points an invader has/is worth
     """
     
-    def __init__(self, strength_range, isBoss, position):
+    def __init__(self, strength_range, isBoss, position, player_position, type):
         """Constructs a new invader"""
         super().__init__()
-        self._strength = random.randint(strength_range[0], strength_range[1])
-
-        self._lives = self._strength
+        self._lives = random.randint(strength_range[0], strength_range[1])
         self._boss = isBoss
-        self.set_color(constants.RED)
-        self.set_velocity(Point(0, int(self.get_lives()/(1.5)+1)))
-        self.set_font_size(int(constants.FONT_SIZE/1.5))
+        self._type = type
+        self.set_position(position)
         
-        if abs(self.get_velocity().get_y()) > 10:
-            self.set_velocity(Point(0, 10))
+        self._type_gen(type, player_position)
+        self.set_font_size(int(constants.FONT_SIZE/1.5))
 
         if isBoss:
             self._boss_gen(strength_range)
-
+        
         self.set_text(f"-{self.get_lives()}-")
-        self.set_position(position)
         
 
     def is_alive(self):
@@ -61,5 +57,47 @@ class Invader(Actor):
         self.set_color(constants.PURPLE)
         self.set_font_size(int(constants.FONT_SIZE * 1.5))
 
-        if abs(self.get_velocity().get_y()) > 10:
-            self.set_velocity(Point(0, 10))
+        if abs(self.get_velocity().get_y()) > 5:
+            self.set_velocity(Point(0, 5))
+
+    def _type_gen(self, type, player_position):
+
+        #Fast Type
+        if type == 1:
+            self.set_color(constants.ORANGE)
+            total_velocity = int(self.get_lives()/(1.5)+1)
+            if total_velocity > 12:
+                total_velocity = 12
+
+            self.set_velocity(Point(0, total_velocity))
+
+        #Diagonal Type
+        if type == 2:
+            self.set_color(constants.YELLOW)
+            total_velocity = int(self.get_lives()/(2)+1)
+            if total_velocity > 8:
+                total_velocity = 8
+
+            self.set_velocity(Point(random.choice([-1, 1]), total_velocity))
+
+
+        #Targeted Type
+        if type == 3:
+            self.set_color(constants.RED)
+
+            total_velocity = int(self.get_lives()/(1.75)+1)
+            if total_velocity > 10:
+                total_velocity = 10
+
+            y_dist = (player_position.get_y() - self.get_position().get_y())
+            x_dist = (player_position.get_x() - self.get_position().get_x())
+            h_dist = (x_dist ** 2 + y_dist ** 2) ** .5
+
+            x_vel = total_velocity * (x_dist / h_dist)
+            y_vel = total_velocity * (y_dist / h_dist)
+ 
+            self.set_velocity(Point(x_vel, y_vel))
+            print(f"{x_vel}/{x_dist}/{self.get_position().get_x()} -- {player_position.get_x()}" )
+
+    def get_type(self):
+        return self._type
