@@ -38,7 +38,7 @@ class HandleCollisionsAction(Action):
                 #if invader is sufficiently close to player, delete invader and change score
                 difference = player.get_position().subtract(invader.get_position())
                 if abs(difference.get_y()) <= 20:
-                    if (difference.get_x() <= 55 and difference.get_x() >= -20):
+                    if (difference.get_x() <= 30 and difference.get_x() >= -75):
                         player.set_lives(player.get_lives() - 1)
                         cast.remove_actor("invaders", invader)
             except:
@@ -75,7 +75,7 @@ class HandleCollisionsAction(Action):
                         cast.remove_actor("invaders", invader)  
                         if invader in bosses:
                             cast.remove_actor("bosses", invader)
-                            if (int(player.get_score() / 100) + 1) > player.get_guns():
+                            if (int(player.get_score() / 100) + 1) > int(player.get_guns()**1.5):
                                 player.set_guns(player.get_guns() + 1)
                             else:
                                 player.set_lives(player.get_lives() + 1)

@@ -38,12 +38,12 @@ def main():
 
     # create the player
     x = int(constants.MAX_X / 2)
-    y = int(constants.MAX_Y - constants.CELL_SIZE)
+    y = int(constants.MAX_Y - constants.CELL_SIZE*1.5)
     position = Point(x, y)
 
     player = Player()
-    player.set_text("#")
-    player.set_font_size(constants.FONT_SIZE)
+    player.set_text("O-|-O")
+    player.set_font_size(int(constants.FONT_SIZE*.75))
     player.set_color(constants.WHITE)
     player.set_position(position)
     cast.add_actor("players", player)

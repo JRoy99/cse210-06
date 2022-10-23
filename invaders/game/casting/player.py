@@ -14,15 +14,15 @@ class Player(Actor):
 
     def shoot_bullets(self, cast):
 
-        bullet = Bullet("^", self.get_position().add(Point(0,-3)), constants.FONT_SIZE, constants.WHITE)
+        bullet = Bullet("^", self.get_position().add(Point(32,-3)), constants.FONT_SIZE, constants.WHITE)
         cast.add_actor("bullets", bullet)
 
         if self.get_guns() > 1:
             for n in range(2, self.get_guns()+1):
                 if n % 2 == 0:
-                    bullet = Bullet("^", self.get_position().add(Point(4*n,-3+(2*n))), constants.FONT_SIZE, constants.WHITE)
+                    bullet = Bullet("^", self.get_position().add(Point((3*n)+32,-3+n)), constants.FONT_SIZE, constants.WHITE)
                 else:
-                    bullet = Bullet("^", self.get_position().add(Point(-4*(n-1),-3+(2*(n-1)))), constants.FONT_SIZE, constants.WHITE)
+                    bullet = Bullet("^", self.get_position().add(Point((-3*(n-1))+32,-3+(n-1))), constants.FONT_SIZE, constants.WHITE)
                 cast.add_actor("bullets", bullet)
 
     def is_alive(self):
